@@ -1,0 +1,27 @@
+{
+  "user": "content/user.json",
+  "site": "content/site.json",
+  "projects": [
+    {
+      "title": "MarkNote 개발기",
+      "slug": "marknote",
+      "json": "content/projects/marknote/project.json",
+      "assets": "content/projects/marknote/assets.json",
+      "series": [
+        {
+          "title": "문법 설계",
+          "slug": "syntax",
+          "json": "content/projects/marknote/series/syntax/series.json",
+          "posts": [
+            {
+              "title": "블록 문법 설계",
+              "slug": "block-system",
+              "json": "content/projects/marknote/series/syntax/posts/block-system/post.json",
+              "content": "content/projects/marknote/series/syntax/posts/block-system/content.mnote"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

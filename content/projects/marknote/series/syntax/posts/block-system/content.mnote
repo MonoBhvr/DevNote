@@ -1,0 +1,21 @@
+# 블록 문법 설계 {#}
+
+MarkNote의 블록 문법은 문서 안에서 구조와 의미를 함께 표현하기 위한 확장 문법입니다.
+
+[fold+[
+블록 예시
+
+[[
+이 내부에서도 **Markdown**과 $x^2$ 수식이 적용됩니다.
+]]
+]]
+
+# 이미지 사용 {#image}
+
+[image[block-diagram | MarkNote 블록 파싱 구조]]
+
+# 스타일 블록 {#style-block}
+
+[! blue[
+중요한 내용입니다.
+]@{width: 80%, align: center}]

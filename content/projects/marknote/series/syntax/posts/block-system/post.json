@@ -1,0 +1,11 @@
+{
+  "title": "블록 문법 설계",
+  "slug": "block-system",
+  "description": "MarkNote의 핵심 블록 문법을 설계한 과정입니다.",
+  "date": "2026-06-03",
+  "updatedAt": "2026-06-03",
+  "tags": ["MarkNote", "Markdown", "Parser"],
+  "cover": "block-cover",
+  "order": 1,
+  "draft": false
+}

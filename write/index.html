@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko" data-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="DevNote 글쓰기 화면">
+  <title>글쓰기 · DevNote</title>
+  <script>(()=>{try{const t=localStorage.getItem('devnote-theme')||'system';document.documentElement.dataset.theme=t}catch{document.documentElement.dataset.theme='system'}})()</script>
+  <link rel="stylesheet" href="../assets/styles/colors.css">
+  <link rel="stylesheet" href="../assets/styles/global.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html">MonoBhvr DevLog</a>
+    <nav class="top-nav"><a href="../index.html#/projects">Projects</a><a href="index.html">글쓰기</a><label class="theme-select">Theme <select data-theme-select aria-label="색상 모드"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></nav>
+  </header>
+  <script>(()=>{const s=document.querySelector('[data-theme-select]');if(!s)return;const apply=t=>{document.documentElement.dataset.theme=t;s.value=t;try{localStorage.setItem('devnote-theme',t)}catch{}};s.value=document.documentElement.dataset.theme||'system';s.addEventListener('change',()=>apply(s.value))})()</script>
+  <main><section class="section page-title write-title"><p class="eyebrow">Authoring</p><h1>글쓰기</h1><p>로그인 후 왼쪽에서 작성하고 오른쪽에서 MarkNote 렌더링 결과를 바로 확인합니다.</p></section>
+    <section class="write-auth" data-authoring-root>
+      <section class="card write-card login-panel" data-login-panel>
+        <h2>GitHub 토큰 로그인</h2>
+        <p class="muted">fine-grained token은 런타임에만 입력합니다. 소스나 docs에는 저장하지 않습니다.</p>
+        <label>GitHub Token <input type="password" data-token autocomplete="off" placeholder="contents:write 권한 토큰"></label>
+        <button type="button" class="button login-button" data-login>GitHub 로그인</button>
+        <p class="status" data-auth-status>로그인이 필요합니다.</p>
+      </section>
+      <section class="write-workspace" data-writing-workspace hidden>
+        <form class="write-editor" data-post-form data-editor-pane>
+          <div class="write-meta-grid">
+            <label>프로젝트 <select data-project></select></label>
+            <label>시리즈 <select data-series></select></label>
+          </div>
+          <input class="write-title-input" data-title required placeholder="제목을 입력하세요">
+          <input class="write-tags-input" data-tags placeholder="태그를 입력하세요">
+          <div class="write-meta-grid compact">
+            <label>Slug <input data-slug placeholder="비우면 제목 기반"></label>
+            <label>설명 <input data-description></label>
+            <label>작성일 <input type="date" data-date></label>
+            <label>순서 <input type="number" data-order value="1"></label>
+          </div>
+          <label class="check-row"><input type="checkbox" data-draft> draft로 저장</label>
+          <div class="editor-toolbar" aria-label="작성 도구"><button type="button" data-insert="heading1">H1</button><button type="button" data-insert="heading2">H2</button><button type="button" data-insert="heading3">H3</button><span></span><button type="button" data-insert="bold">B</button><button type="button" data-insert="italic">I</button><button type="button" data-insert="quote">“</button><button type="button" data-insert="link">Link</button><button type="button" data-insert="code">&lt;&gt;</button></div>
+          <textarea class="write-body-input" data-content rows="22" placeholder="당신의 이야기를 적어보세요..."></textarea>
+          <section class="image-panel">
+            <h2>이미지 업로드</h2>
+            <div class="write-meta-grid compact">
+              <label>이미지 <input type="file" data-image-file accept="image/png,image/jpeg,image/webp,image/svg+xml"></label>
+              <label>Alias <input data-image-alias placeholder="block-diagram"></label>
+              <label>Alt <input data-image-alt></label>
+              <label>Description <input data-image-description></label>
+            </div>
+            <label class="check-row"><input type="checkbox" data-image-overwrite> 같은 alias 덮어쓰기</label>
+            <button type="button" class="button secondary-button" data-upload-image>이미지 업로드</button>
+            <p class="status" data-image-status></p>
+          </section>
+          <div class="write-actions"><a href="../index.html">← 나가기</a><button type="submit" class="button">출간하기</button></div>
+          <p class="status" data-save-status></p>
+        </form>
+        <aside class="write-preview" data-preview-pane>
+          <article class="post-content marknote-content preview-content" data-preview><p class="muted">작성한 MarkNote가 여기에 렌더링됩니다.</p></article>
+        </aside>
+      </section>
+    </section>
+    <script type="application/json" id="devnote-authoring-config">{&quot;repo&quot;:&quot;MonoBhvr/devnote-blog&quot;,&quot;branch&quot;:&quot;main&quot;,&quot;contentRoot&quot;:&quot;content&quot;,&quot;manifestPath&quot;:&quot;content/manifest.json&quot;,&quot;allowedAuthors&quot;:[&quot;MonoBhvr&quot;],&quot;projects&quot;:[{&quot;title&quot;:&quot;MarkNote 개발기&quot;,&quot;slug&quot;:&quot;marknote&quot;,&quot;series&quot;:[{&quot;title&quot;:&quot;문법 설계&quot;,&quot;slug&quot;:&quot;syntax&quot;}]}]}</script>
+    <script src="../assets/scripts/authoring.js"></script></main>
+</body>
+</html>

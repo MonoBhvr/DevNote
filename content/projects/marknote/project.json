@@ -1,0 +1,9 @@
+{
+  "title": "MarkNote 개발기",
+  "slug": "marknote",
+  "description": "Markdown 기반 커스텀 마크업 언어 MarkNote를 설계하고 구현하는 기록입니다.",
+  "thumbnail": "project-cover",
+  "order": 1,
+  "createdAt": "2026-06-03",
+  "updatedAt": "2026-06-03"
+}

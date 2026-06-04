@@ -1,0 +1,23 @@
+{
+  "name": "devnote",
+  "version": "0.1.0",
+  "description": "MarkNote based GitHub Pages blog template.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "node src/build/buildClientApp.mjs",
+    "preview": "node src/preview.mjs",
+    "test": "node --test",
+    "verify": "npm test && npm run build"
+  },
+  "dependencies": {
+    "esbuild": "^0.28.0",
+    "entities": "^4.5.0",
+    "highlight.js": "^11.11.1",
+    "katex": "^0.17.0",
+    "linkify-it": "^5.0.1",
+    "mdurl": "^2.0.0",
+    "punycode.js": "^2.3.1",
+    "uc.micro": "^2.1.0"
+  }
+}

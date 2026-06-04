@@ -1,0 +1,8 @@
+{
+  "name": "MonoBhvr",
+  "displayName": "MonoBhvr DevLog",
+  "description": "MarkNote와 개발 기록을 정리하는 데브로그입니다.",
+  "avatar": "/assets/profile/avatar.png",
+  "github": "MonoBhvr",
+  "allowedAuthors": ["MonoBhvr"]
+}

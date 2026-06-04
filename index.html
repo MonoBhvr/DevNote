@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ko" data-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MarkNote와 개발 기록을 정리하는 데브로그입니다.">
+  <title>DevNote</title>
+  <script>(()=>{try{const t=localStorage.getItem('devnote-theme')||'system';document.documentElement.dataset.theme=t}catch{document.documentElement.dataset.theme='system'}})()</script>
+  <link rel="stylesheet" href="assets/styles/colors.css">
+  <link rel="stylesheet" href="assets/styles/global.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">MonoBhvr DevLog</a>
+    <nav class="top-nav"><a href="index.html#/projects">Projects</a><a href="write/index.html">글쓰기</a><label class="theme-select">Theme <select data-theme-select aria-label="색상 모드"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></nav>
+  </header>
+  <script>(()=>{const s=document.querySelector('[data-theme-select]');if(!s)return;const apply=t=>{document.documentElement.dataset.theme=t;s.value=t;try{localStorage.setItem('devnote-theme',t)}catch{}};s.value=document.documentElement.dataset.theme||'system';s.addEventListener('change',()=>apply(s.value))})()</script>
+  <main><section id="app" class="app-loading"><p>콘텐츠를 불러오는 중입니다.</p></section>
+    <script src="assets/scripts/content-data.js"></script>
+    <script src="assets/scripts/app.js"></script></main>
+</body>
+</html>
