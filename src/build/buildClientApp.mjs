@@ -6,28 +6,31 @@ import { build } from 'esbuild'
 import { loadContent } from '../content/loadContent.mjs'
 import { copyIfExists, readJson, resetDir, writeTextFile } from '../utils/fs.mjs'
 import { renderLayout } from '../components/Layout.mjs'
-import { renderWritePage } from './writePage.mjs'
+import { renderLoginPage, renderWritePage } from './writePage.mjs'
 
 const sourceRoot = dirname(dirname(dirname(fileURLToPath(import.meta.url))))
 
 function relativeAppHtml (html) {
   return html
     .replaceAll('href="/projects/"', 'href="index.html#/projects"')
+    .replaceAll('href="/login/"', 'href="login/index.html"')
     .replaceAll('href="/write/"', 'href="write/index.html"')
     .replaceAll('href="/"', 'href="index.html"')
     .replaceAll('href="/DevNote/', 'href="')
     .replaceAll('src="/DevNote/', 'src="')
     .replaceAll('href="/assets/', 'href="assets/')
     .replaceAll('src="/assets/', 'src="assets/')
+    .replaceAll('href="/login/', 'href="login/')
     .replaceAll('href="/write/', 'href="write/')
 }
 
-function relativeWriteHtml (html) {
+function relativeNestedHtml (html, pageName) {
   return relativeAppHtml(html)
     .replaceAll('href="assets/', 'href="../assets/')
     .replaceAll('src="assets/', 'src="../assets/')
     .replaceAll('href="index.html', 'href="../index.html')
-    .replaceAll('href="write/index.html"', 'href="index.html"')
+    .replaceAll('href="login/index.html"', pageName === 'login' ? 'href="index.html"' : 'href="../login/index.html"')
+    .replaceAll('href="write/index.html"', pageName === 'write' ? 'href="index.html"' : 'href="../write/index.html"')
 }
 
 function appShell (site) {
@@ -87,6 +90,7 @@ async function contentSnapshot (rootDir, manifest) {
 async function prepareOutput (rootDir, outDir) {
   if (outDir === rootDir) {
     await rm(join(outDir, 'assets'), { recursive: true, force: true })
+    await rm(join(outDir, 'login'), { recursive: true, force: true })
     await rm(join(outDir, 'write'), { recursive: true, force: true })
     await rm(join(outDir, 'index.html'), { force: true })
     await rm(join(outDir, 'content/manifest.json'), { force: true })
@@ -103,6 +107,8 @@ export async function buildClientApp ({ rootDir = process.cwd(), outDir = rootDi
   const site = await loadContent({ rootDir, basePath: '/' })
   await prepareOutput(rootDir, outDir)
   await copyIfExists(join(sourceRoot, 'src/styles'), join(outDir, 'assets/styles'))
+  await copyIfExists(join(sourceRoot, 'node_modules/katex/dist/katex.min.css'), join(outDir, 'assets/styles/katex.min.css'))
+  await copyIfExists(join(sourceRoot, 'node_modules/katex/dist/fonts'), join(outDir, 'assets/styles/fonts'))
   await copyIfExists(join(sourceRoot, 'src/public/scripts'), join(outDir, 'assets/scripts'))
   await build({
     entryPoints: [join(sourceRoot, 'src/public/scripts/app.js')],
@@ -133,12 +139,13 @@ export async function buildClientApp ({ rootDir = process.cwd(), outDir = rootDi
   await writeTextFile(join(outDir, 'assets/scripts/content-data.js'), `globalThis.DEVNOTE_CONTENT = ${JSON.stringify(await contentSnapshot(rootDir, manifest))};\n`)
   await writeTextFile(join(outDir, 'index.html'), appShell(site))
   await writeTextFile(join(outDir, '.nojekyll'), '')
-  await writeTextFile(join(outDir, 'write/index.html'), relativeWriteHtml(renderWritePage(site)))
-  return { pages: 2, outDir }
+  await writeTextFile(join(outDir, 'login/index.html'), relativeNestedHtml(renderLoginPage(site), 'login'))
+  await writeTextFile(join(outDir, 'write/index.html'), relativeNestedHtml(renderWritePage(site), 'write'))
+  return { pages: 3, outDir }
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const result = await buildClientApp()
   console.log(`Built client-rendered template into ${result.outDir}`)
-  console.log(['index.html', 'write/index.html', 'assets/scripts/app.js', 'assets/scripts/content-data.js', 'content/manifest.json', '.nojekyll'].join('\n'))
+  console.log(['index.html', 'login/index.html', 'write/index.html', 'assets/scripts/app.js', 'assets/scripts/content-data.js', 'content/manifest.json', '.nojekyll'].join('\n'))
 }

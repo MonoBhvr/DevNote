@@ -2,10 +2,20 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
+:root {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-serif: ui-serif, Georgia, "Times New Roman", "Noto Serif KR", "Apple Myungjo", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
 html {
   background: var(--color-bg);
   color: var(--color-text);
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
 }
 
 body {
@@ -205,34 +215,310 @@ time {
   padding: clamp(1rem, 3vw, 2rem);
   border: 1px solid var(--color-border);
   border-radius: 1.4rem;
-  background: rgba(16, 36, 43, 0.82);
+  background: color-mix(in srgb, var(--color-panel) 88%, var(--color-bg));
 }
 
-.post-content img {
-  max-width: 100%;
-  border-radius: 1rem;
+:where(.post-content.marknote-content, .preview-content) {
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 1.02rem;
+  line-height: 1.78;
+  overflow-wrap: break-word;
 }
 
-.post-content pre {
+:where(.post-content.marknote-content, .preview-content) > :first-child {
+  margin-top: 0;
+}
+
+:where(.post-content.marknote-content, .preview-content) > :last-child {
+  margin-bottom: 0;
+}
+
+:where(.post-content.marknote-content, .preview-content) h1,
+:where(.post-content.marknote-content, .preview-content) h2,
+:where(.post-content.marknote-content, .preview-content) h3,
+:where(.post-content.marknote-content, .preview-content) h4,
+:where(.post-content.marknote-content, .preview-content) h5,
+:where(.post-content.marknote-content, .preview-content) h6 {
+  margin: 2.1em 0 0.7em;
+  line-height: 1.14;
+  letter-spacing: -0.035em;
+}
+
+:where(.post-content.marknote-content, .preview-content) h1 {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+:where(.post-content.marknote-content, .preview-content) h2 {
+  color: var(--color-accent-strong);
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+:where(.post-content.marknote-content, .preview-content) h3 {
+  font-size: 1.32rem;
+}
+
+:where(.post-content.marknote-content, .preview-content) p,
+:where(.post-content.marknote-content, .preview-content) ul,
+:where(.post-content.marknote-content, .preview-content) ol,
+:where(.post-content.marknote-content, .preview-content) blockquote,
+:where(.post-content.marknote-content, .preview-content) table,
+:where(.post-content.marknote-content, .preview-content) figure,
+:where(.post-content.marknote-content, .preview-content) pre {
+  margin: 1.05rem 0;
+}
+
+:where(.post-content.marknote-content, .preview-content) ul,
+:where(.post-content.marknote-content, .preview-content) ol {
+  padding-left: 1.45rem;
+}
+
+:where(.post-content.marknote-content, .preview-content) li + li {
+  margin-top: 0.35rem;
+}
+
+:where(.post-content.marknote-content, .preview-content) a {
+  color: var(--color-accent-strong);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--color-accent-strong) 45%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+:where(.post-content.marknote-content, .preview-content) blockquote {
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--color-prose-quote-border);
+  border-radius: 0 1rem 1rem 0;
+  color: var(--color-muted);
+  background: var(--color-prose-quote-bg);
+}
+
+:where(.post-content.marknote-content, .preview-content) code {
+  padding: 0.16em 0.38em;
+  border: 1px solid var(--color-prose-code-border);
+  border-radius: 0.42rem;
+  background: var(--color-prose-code-bg);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+:where(.post-content.marknote-content, .preview-content) pre {
   overflow: auto;
   padding: 1rem;
+  border: 1px solid var(--color-prose-code-border);
   border-radius: 1rem;
-  background: #031012;
+  background: var(--color-prose-code-bg);
 }
 
-.marknote-block,
-.marknote-fold,
-.marknote-embed,
-.marknote-card {
-  margin: 1rem 0;
+:where(.post-content.marknote-content, .preview-content) pre code {
+  display: block;
+  min-width: max-content;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+:where(.post-content.marknote-content, .preview-content) table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+:where(.post-content.marknote-content, .preview-content) th,
+:where(.post-content.marknote-content, .preview-content) td {
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+:where(.post-content.marknote-content, .preview-content) th {
+  color: var(--color-accent-strong);
+  background: var(--color-bg-soft);
+}
+
+:where(.post-content.marknote-content, .preview-content) hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+:where(.post-content.marknote-content, .preview-content) img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1rem;
+}
+
+:where(.post-content.marknote-content, .preview-content) figcaption {
+  margin-top: 0.55rem;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-block,
+:where(.post-content.marknote-content, .preview-content) .marknote-fold,
+:where(.post-content.marknote-content, .preview-content) .marknote-embed,
+:where(.post-content.marknote-content, .preview-content) .marknote-card {
+  margin: 1.15rem 0;
+  border: 1px solid var(--color-marknote-block-border);
+  border-radius: 1rem;
+  background: var(--marknote-block-color, var(--color-marknote-block-bg));
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-block,
+:where(.post-content.marknote-content, .preview-content) .marknote-fold {
+  padding: 1rem;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-block-has-type:not(.marknote-fold) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-block-content > :first-child {
+  margin-top: 0;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-block-content > :last-child {
+  margin-bottom: 0;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-block-marker {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.55rem;
+  height: 1.55rem;
+  margin-right: 0;
+  border: 1px solid var(--color-marknote-block-border);
+  border-radius: 999px;
+  color: var(--color-accent-strong);
+  background: color-mix(in srgb, var(--color-panel) 72%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-fold summary {
+  cursor: pointer;
+  color: var(--color-accent-strong);
+  font-weight: 800;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-fold summary::-webkit-details-marker {
+  display: none;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-fold summary::before {
+  content: "+";
+  display: inline-grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-right: 0.45rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-fold[open] summary::before {
+  content: "-";
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-block-color-red { --marknote-block-color: #fff1f2; }
+:where(.post-content.marknote-content, .preview-content) .marknote-block-color-blue { --marknote-block-color: #eff6ff; }
+:where(.post-content.marknote-content, .preview-content) .marknote-block-color-green { --marknote-block-color: #ecfdf5; }
+:where(.post-content.marknote-content, .preview-content) .marknote-block-color-yellow { --marknote-block-color: #fefce8; }
+:where(.post-content.marknote-content, .preview-content) .marknote-block-color-orange { --marknote-block-color: #fff7ed; }
+:where(.post-content.marknote-content, .preview-content) .marknote-block-color-purple { --marknote-block-color: #faf5ff; }
+:where(.post-content.marknote-content, .preview-content) .marknote-block-color-gray { --marknote-block-color: #f5f5f4; }
+
+:where(.post-content.marknote-content, .preview-content) :is(.marknote-block-color-red, .marknote-block-color-blue, .marknote-block-color-green, .marknote-block-color-yellow, .marknote-block-color-orange, .marknote-block-color-purple, .marknote-block-color-gray, .marknote-block-color-custom) {
+  border-color: var(--color-marknote-block-border);
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-embed {
+  overflow: hidden;
+  padding: 0.75rem;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-embed-web iframe,
+:where(.post-content.marknote-content, .preview-content) .marknote-embed-html {
+  width: 100%;
+  min-height: 22rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: var(--color-bg-soft);
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-card {
+  display: block;
+  padding: 1rem 1.15rem;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-card::after {
+  content: attr(data-marknote-card-url);
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-math-block {
+  overflow-x: auto;
   padding: 1rem;
   border: 1px solid var(--color-border);
   border-radius: 1rem;
   background: var(--color-bg-soft);
+  text-align: center;
 }
 
-.marknote-image-broken {
+:where(.post-content.marknote-content, .preview-content) .marknote-math-error,
+:where(.post-content.marknote-content, .preview-content) .marknote-image-broken {
   color: var(--color-danger);
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-highlight {
+  padding: 0.08em 0.2em;
+  border-radius: 0.25rem;
+  background: var(--color-prose-mark-bg);
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-highlight-strong {
+  padding: 0.08em 0.25em;
+  border-radius: 0.25rem;
+  background: var(--color-prose-mark-strong-bg);
+  font-weight: 800;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-term {
+  border-bottom: 1px dotted var(--color-accent-strong);
+  cursor: help;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-footnote-ref a {
+  padding: 0.05rem 0.32rem;
+  border-radius: 999px;
+  background: var(--color-bg-soft);
+  font-family: var(--font-mono);
+  text-decoration: none;
+}
+
+:where(.post-content.marknote-content, .preview-content) .marknote-footnotes {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted);
+  font-size: 0.92rem;
 }
 
 .post-nav {
@@ -259,6 +545,10 @@ time {
   border: 1px solid var(--color-border);
   border-radius: 1rem;
   background: var(--color-panel);
+}
+
+.comments h2 {
+  margin-top: 0;
 }
 
 .write-auth {
@@ -307,6 +597,19 @@ time {
 .write-card {
   display: grid;
   gap: 0.85rem;
+}
+
+.write-session {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.write-session p {
+  margin: 0;
 }
 
 .write-form {
@@ -431,7 +734,7 @@ textarea {
 textarea {
   min-height: 18rem;
   resize: vertical;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
 }
 
 .button {
@@ -498,5 +801,18 @@ textarea {
   .write-preview {
     border-top: 1px solid var(--color-border);
     border-left: 0;
+  }
+
+  :where(.post-content.marknote-content, .preview-content) {
+    font-size: 0.98rem;
+  }
+
+  :where(.post-content.marknote-content, .preview-content) .marknote-card::after {
+    white-space: normal;
+  }
+
+  :where(.post-content.marknote-content, .preview-content) .marknote-embed-web iframe,
+  :where(.post-content.marknote-content, .preview-content) .marknote-embed-html {
+    min-height: 16rem;
   }
 }

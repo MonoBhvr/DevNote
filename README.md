@@ -25,7 +25,7 @@ npm run preview
 
 ## 글쓰기
 
-정적 사이트라서 서버 secret을 둘 수 없다. `/write/index.html`은 GitHub fine-grained token을 런타임에 입력받아 GitHub API로 현재 사용자를 확인하고, `content/user.json`의 `allowedAuthors`에 있는 사용자에게만 UI 저장을 허용한다.
+정적 사이트라서 서버 secret을 둘 수 없다. `/login/index.html`은 GitHub fine-grained token을 런타임에 입력받아 GitHub API로 현재 사용자를 확인하고, `content/user.json`의 `allowedAuthors`에 있는 사용자에게만 UI 저장을 허용한다. 로그인에 성공하면 `/write/index.html`로 이동한다.
 
 필요한 토큰 권한:
 
@@ -33,7 +33,9 @@ npm run preview
 - `Contents: Read and write`
 - 만료일 설정 권장
 
-토큰은 소스나 workflow 어디에도 저장하지 않는다. 브라우저에 입력한 토큰은 현재 페이지 런타임에서만 사용된다.
+토큰은 소스나 workflow 어디에도 저장하지 않는다. 로그인에 성공하면 다음 방문 때 자동 로그인을 위해 현재 브라우저의 `localStorage`에 `devnote-authoring-token:{owner/repo}` 키로 저장한다. 이 값은 해당 브라우저에서 실행되는 스크립트가 읽을 수 있으므로, 대상 저장소만 선택한 fine-grained token과 만료일을 사용한다.
+
+`/write/index.html`은 글쓰기 전용 화면이다. 토큰 입력칸은 없고, 브라우저에 저장된 관리자 토큰을 확인한 뒤 에디터를 보여준다. 토큰이 없거나 만료되면 관리자 로그인 링크만 표시한다.
 
 작성 화면에서 가능한 작업:
 
@@ -45,3 +47,23 @@ npm run preview
 `/write/`에서 저장하면 repository의 `content/...` 파일과 `content/manifest.json`이 갱신된다. GitHub Pages가 새 commit을 반영하면 앱이 갱신된 JSON과 `.mnote`를 fetch해서 바로 새 글을 보여준다.
 
 `allowedAuthors`는 UI 표시용 게이트이고, 실제 쓰기 권한은 GitHub 저장소 권한과 토큰 권한이 최종적으로 검증한다.
+
+## 댓글
+
+댓글은 Giscus를 사용한다. 글쓰기 로그인 방식은 그대로 fine-grained token 입력 방식이고, 댓글 로그인은 Giscus가 GitHub Discussions를 통해 별도로 처리한다.
+
+사용하려면 GitHub 저장소에서 Discussions를 켜고, Giscus 앱을 설치한 뒤 `config/site.json`의 `giscus` 값을 채운다.
+
+```json
+{
+  "giscus": {
+    "enabled": true,
+    "repo": "OWNER/REPO",
+    "repoId": "Giscus에서 받은 repo id",
+    "category": "General",
+    "categoryId": "Giscus에서 받은 category id"
+  }
+}
+```
+
+`repoId`와 `categoryId`는 <https://giscus.app>에서 저장소와 Discussion category를 선택하면 생성된다. 설정 후 `npm run build`를 실행하면 포스트 하단에 댓글 영역이 붙는다.

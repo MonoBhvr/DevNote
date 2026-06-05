@@ -6,6 +6,15 @@ export function escapeHtml (value = '') {
     .replace(/"/g, '&quot;')
 }
 
+export function escapeScriptJson (value = '') {
+  return String(value)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029')
+}
+
 export function joinBase (basePath, path = '') {
   const base = basePath.endsWith('/') ? basePath : `${basePath}/`
   const clean = path.replace(/^\//, '')

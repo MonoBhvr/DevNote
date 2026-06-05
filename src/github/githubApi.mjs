@@ -15,7 +15,13 @@ export function createGitHubContentsClient ({ owner, repo, token, branch, fetchI
         ...(init.headers || {})
       }
     })
-    if (!response.ok) throw new Error(`GitHub Contents API failed for ${path}`)
+    if (!response.ok) {
+      const detail = await response.text().catch(() => '')
+      if (response.status === 401) throw new Error('GitHub token이 유효하지 않거나 만료되었습니다.')
+      if (response.status === 403) throw new Error('GitHub token에 repository Contents 권한이 부족합니다.')
+      if (response.status === 404) throw new Error(`${path}를 찾을 수 없습니다. token이 ${owner}/${repo} 저장소에 접근 가능한지 확인하세요.`)
+      throw new Error(`GitHub Contents API 실패 (${response.status}) for ${path}${detail ? `: ${detail}` : ''}`)
+    }
     return response.json()
   }
 

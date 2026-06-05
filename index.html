@@ -7,13 +7,15 @@
   <title>DevNote</title>
   <script>(()=>{try{const t=localStorage.getItem('devnote-theme')||'system';document.documentElement.dataset.theme=t}catch{document.documentElement.dataset.theme='system'}})()</script>
   <link rel="stylesheet" href="assets/styles/colors.css">
+  <link rel="stylesheet" href="assets/styles/katex.min.css">
   <link rel="stylesheet" href="assets/styles/global.css">
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="index.html">MonoBhvr DevLog</a>
-    <nav class="top-nav"><a href="index.html#/projects">Projects</a><a href="write/index.html">글쓰기</a><label class="theme-select">Theme <select data-theme-select aria-label="색상 모드"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></nav>
+    <nav class="top-nav"><a href="index.html#/projects">Projects</a><a href="login/index.html" data-admin-login-nav>관리자 로그인</a><a href="write/index.html" data-write-nav hidden>글쓰기</a><label class="theme-select">Theme <select data-theme-select aria-label="색상 모드"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></nav>
   </header>
+  <script>(()=>{const k="devnote-authoring-token:MonoBhvr/DevNote";const l=document.querySelector('[data-admin-login-nav]');const w=document.querySelector('[data-write-nav]');let ok=false;try{ok=!!localStorage.getItem(k)}catch{}if(l)l.hidden=ok;if(w)w.hidden=!ok})()</script>
   <script>(()=>{const s=document.querySelector('[data-theme-select]');if(!s)return;const apply=t=>{document.documentElement.dataset.theme=t;s.value=t;try{localStorage.setItem('devnote-theme',t)}catch{}};s.value=document.documentElement.dataset.theme||'system';s.addEventListener('change',()=>apply(s.value))})()</script>
   <main><section id="app" class="app-loading"><p>콘텐츠를 불러오는 중입니다.</p></section>
     <script src="assets/scripts/content-data.js"></script>

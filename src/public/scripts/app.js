@@ -89,6 +89,7 @@ function findPost (series, slug) {
 async function loadState () {
   const manifest = await json('content/manifest.json')
   const user = await json(manifest.user)
+  const site = await json(manifest.site).catch(() => ({}))
   const projects = []
   for (const projectRef of manifest.projects) {
     const meta = await json(projectRef.json)
@@ -108,7 +109,47 @@ async function loadState () {
     projects.push({ meta, ref: projectRef, assets, series })
   }
   projects.sort((a, b) => (a.meta.order ?? 0) - (b.meta.order ?? 0))
-  return { user, projects }
+  return { user, site, projects }
+}
+
+function giscusTheme () {
+  const theme = document.documentElement.dataset.theme || 'system'
+  if (theme === 'dark') return 'dark'
+  if (theme === 'light') return 'light'
+  return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
+function renderGiscusComments (site, post) {
+  const giscus = site.giscus || {}
+  if (!giscus.enabled) return ''
+  if (!giscus.repo || !giscus.repoId || !giscus.category || !giscus.categoryId) {
+    return '<section class="comments"><h2>댓글</h2><p class="muted">Giscus 설정에 repoId와 categoryId를 입력하면 댓글이 표시됩니다.</p></section>'
+  }
+  const term = `${post.ref.content}`
+  return `<section class="comments"><h2>댓글</h2><div data-giscus-root data-term="${escapeHtml(term)}"></div></section>`
+}
+
+function mountGiscusComments (site) {
+  const root = app.querySelector('[data-giscus-root]')
+  if (!root) return
+  const giscus = site.giscus || {}
+  const script = document.createElement('script')
+  script.src = 'https://giscus.app/client.js'
+  script.async = true
+  script.crossOrigin = 'anonymous'
+  script.setAttribute('data-repo', giscus.repo)
+  script.setAttribute('data-repo-id', giscus.repoId)
+  script.setAttribute('data-category', giscus.category)
+  script.setAttribute('data-category-id', giscus.categoryId)
+  script.setAttribute('data-mapping', giscus.mapping || 'specific')
+  script.setAttribute('data-term', root.dataset.term)
+  script.setAttribute('data-strict', giscus.strict || '1')
+  script.setAttribute('data-reactions-enabled', giscus.reactionsEnabled || '1')
+  script.setAttribute('data-emit-metadata', '0')
+  script.setAttribute('data-input-position', giscus.inputPosition || 'bottom')
+  script.setAttribute('data-theme', giscusTheme())
+  script.setAttribute('data-lang', giscus.lang || 'ko')
+  root.append(script)
 }
 
 function postCard (post, project, series) {
@@ -144,7 +185,8 @@ async function renderPost (state, project, series, post) {
   const rendered = renderMarkNote(source, project.assets, project.meta.slug)
   const tree = state.projects.map(projectNode => `<section><a class="tree-project" href="${link(`/projects/${projectNode.meta.slug}`)}">${escapeHtml(projectNode.meta.title)}</a>${projectNode.series.map(seriesNode => `<div class="tree-series"><a href="${link(`/projects/${projectNode.meta.slug}/${seriesNode.meta.slug}`)}">${escapeHtml(seriesNode.meta.title)}</a>${seriesNode.posts.map(postNode => `<a class="tree-post${postNode.meta.slug === post.meta.slug ? ' active' : ''}" href="${link(`/projects/${projectNode.meta.slug}/${seriesNode.meta.slug}/${postNode.meta.slug}`)}">${escapeHtml(postNode.meta.title)}</a>`).join('')}</div>`).join('')}</section>`).join('')
   app.innerHTML = `<article class="post-shell"><header class="post-hero"><p class="eyebrow">${escapeHtml(project.meta.title)} / ${escapeHtml(series.meta.title)}</p><h1>${escapeHtml(post.meta.title)}</h1><time>${escapeHtml(post.meta.date)}</time><p>${escapeHtml(post.meta.description || '')}</p></header>
-  <div class="post-layout"><aside class="post-tree">${tree}</aside><div class="post-content marknote-content">${rendered.html}</div><aside class="post-toc"><details open><summary>목차</summary>${rendered.toc.map(item => `<a class="toc-level-${item.level}" href="#${escapeHtml(item.anchor)}">${escapeHtml(item.title)}</a>`).join('')}</details></aside></div></article>`
+  <div class="post-layout"><aside class="post-tree">${tree}</aside><div class="post-content marknote-content">${rendered.html}</div><aside class="post-toc"><details open><summary>목차</summary>${rendered.toc.map(item => `<a class="toc-level-${item.level}" href="#${escapeHtml(item.anchor)}">${escapeHtml(item.title)}</a>`).join('')}</details></aside></div>${renderGiscusComments(state.site, post)}</article>`
+  mountGiscusComments(state.site)
 }
 
 async function render () {

@@ -2,6 +2,18 @@
   "title": "DevNote",
   "basePath": "/",
   "defaultTheme": "system",
-  "repository": "MonoBhvr/devnote-blog",
-  "branch": "main"
+  "repository": "MonoBhvr/DevNote",
+  "branch": "main",
+  "giscus": {
+    "enabled": true,
+    "repo": "MonoBhvr/DevNote",
+    "repoId": "R_kgDOSrGFxA",
+    "category": "Announcements",
+    "categoryId": "DIC_kwDOSrGFxM4C-fco",
+    "mapping": "specific",
+    "strict": "1",
+    "reactionsEnabled": "1",
+    "inputPosition": "bottom",
+    "lang": "ko"
+  }
 }

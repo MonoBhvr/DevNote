@@ -1,8 +1,8 @@
 import { renderLayout } from '../components/Layout.mjs'
-import { escapeHtml, joinBase } from './html.mjs'
+import { escapeScriptJson, joinBase } from './html.mjs'
 
-export function renderWritePage (site) {
-  const authoringConfig = {
+function authoringConfigForSite (site) {
+  return {
     repo: site.siteConfig.repository || '',
     branch: site.siteConfig.branch || 'main',
     contentRoot: 'content',
@@ -14,22 +14,46 @@ export function renderWritePage (site) {
       series: projectNode.series.map(seriesNode => ({ title: seriesNode.series.title, slug: seriesNode.series.slug }))
     }))
   }
+}
 
+function authoringScript (site) {
+  return `<script type="application/json" id="devnote-authoring-config">${escapeScriptJson(JSON.stringify(authoringConfigForSite(site)))}</script>
+    <script src="${joinBase(site.siteConfig.basePath, 'assets/scripts/authoring.js')}"></script>`
+}
+
+export function renderLoginPage (site) {
   return renderLayout({
     site,
-    title: '글쓰기',
-    description: 'DevNote 글쓰기 화면',
-    body: `<section class="section page-title write-title"><p class="eyebrow">Authoring</p><h1>글쓰기</h1><p>로그인 후 왼쪽에서 작성하고 오른쪽에서 MarkNote 렌더링 결과를 바로 확인합니다.</p></section>
-    <section class="write-auth" data-authoring-root>
+    title: '관리자 로그인',
+    description: 'DevNote 관리자 로그인 화면',
+    body: `<section class="section page-title write-title"><p class="eyebrow">Admin</p><h1>관리자 로그인</h1><p>fine-grained token으로 관리자 권한을 확인합니다. 로그인 후 글쓰기 화면으로 이동합니다.</p></section>
+    <section class="write-auth" data-authoring-root data-authoring-mode="login">
       <section class="card write-card login-panel" data-login-panel>
-        <h2>GitHub 토큰 로그인</h2>
-        <p class="muted">fine-grained token은 런타임에만 입력합니다. 소스나 docs에는 저장하지 않습니다.</p>
+        <p class="eyebrow">GitHub</p>
+        <h2>토큰 로그인</h2>
+        <p class="muted">토큰은 소스나 workflow에 저장하지 않는다. 로그인 성공 후 이 브라우저에 저장해 다음 방문 때 자동 로그인합니다.</p>
         <label>GitHub Token <input type="password" data-token autocomplete="off" placeholder="contents:write 권한 토큰"></label>
         <button type="button" class="button login-button" data-login>GitHub 로그인</button>
         <p class="status" data-auth-status>로그인이 필요합니다.</p>
       </section>
+    </section>
+    ${authoringScript(site)}`
+  })
+}
+
+export function renderWritePage (site) {
+  return renderLayout({
+    site,
+    title: '글쓰기',
+    description: 'DevNote 글쓰기 화면',
+    body: `<section class="section page-title write-title"><p class="eyebrow">Authoring</p><h1>글쓰기</h1></section>
+    <section class="write-auth" data-authoring-root data-authoring-mode="write">
+      <section class="card write-card write-guard" data-write-guard hidden>
+        <p class="status" data-auth-status></p>
+      </section>
       <section class="write-workspace" data-writing-workspace hidden>
         <form class="write-editor" data-post-form data-editor-pane>
+          <div class="write-session"><p class="status" data-session-status>관리자 확인 중입니다.</p><button type="button" class="button secondary-button" data-logout>로그아웃</button></div>
           <div class="write-meta-grid">
             <label>프로젝트 <select data-project></select></label>
             <label>시리즈 <select data-series></select></label>
@@ -65,7 +89,6 @@ export function renderWritePage (site) {
         </aside>
       </section>
     </section>
-    <script type="application/json" id="devnote-authoring-config">${escapeHtml(JSON.stringify(authoringConfig))}</script>
-    <script src="${joinBase(site.siteConfig.basePath, 'assets/scripts/authoring.js')}"></script>`
+    ${authoringScript(site)}`
   })
 }

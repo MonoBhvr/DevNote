@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko" data-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="DevNote 관리자 로그인 화면">
+  <title>관리자 로그인 · DevNote</title>
+  <script>(()=>{try{const t=localStorage.getItem('devnote-theme')||'system';document.documentElement.dataset.theme=t}catch{document.documentElement.dataset.theme='system'}})()</script>
+  <link rel="stylesheet" href="../assets/styles/colors.css">
+  <link rel="stylesheet" href="../assets/styles/katex.min.css">
+  <link rel="stylesheet" href="../assets/styles/global.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html">MonoBhvr DevLog</a>
+    <nav class="top-nav"><a href="../index.html#/projects">Projects</a><a href="index.html" data-admin-login-nav>관리자 로그인</a><a href="../write/index.html" data-write-nav hidden>글쓰기</a><label class="theme-select">Theme <select data-theme-select aria-label="색상 모드"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></nav>
+  </header>
+  <script>(()=>{const k="devnote-authoring-token:MonoBhvr/DevNote";const l=document.querySelector('[data-admin-login-nav]');const w=document.querySelector('[data-write-nav]');let ok=false;try{ok=!!localStorage.getItem(k)}catch{}if(l)l.hidden=ok;if(w)w.hidden=!ok})()</script>
+  <script>(()=>{const s=document.querySelector('[data-theme-select]');if(!s)return;const apply=t=>{document.documentElement.dataset.theme=t;s.value=t;try{localStorage.setItem('devnote-theme',t)}catch{}};s.value=document.documentElement.dataset.theme||'system';s.addEventListener('change',()=>apply(s.value))})()</script>
+  <main><section class="section page-title write-title"><p class="eyebrow">Admin</p><h1>관리자 로그인</h1><p>fine-grained token으로 관리자 권한을 확인합니다. 로그인 후 글쓰기 화면으로 이동합니다.</p></section>
+    <section class="write-auth" data-authoring-root data-authoring-mode="login">
+      <section class="card write-card login-panel" data-login-panel>
+        <p class="eyebrow">GitHub</p>
+        <h2>토큰 로그인</h2>
+        <p class="muted">토큰은 소스나 workflow에 저장하지 않는다. 로그인 성공 후 이 브라우저에 저장해 다음 방문 때 자동 로그인합니다.</p>
+        <label>GitHub Token <input type="password" data-token autocomplete="off" placeholder="contents:write 권한 토큰"></label>
+        <button type="button" class="button login-button" data-login>GitHub 로그인</button>
+        <p class="status" data-auth-status>로그인이 필요합니다.</p>
+      </section>
+    </section>
+    <script type="application/json" id="devnote-authoring-config">{"repo":"MonoBhvr/DevNote","branch":"main","contentRoot":"content","manifestPath":"content/manifest.json","allowedAuthors":["MonoBhvr"],"projects":[{"title":"MarkNote 개발기","slug":"marknote","series":[{"title":"문법 설계","slug":"syntax"}]}]}</script>
+    <script src="../assets/scripts/authoring.js"></script></main>
+</body>
+</html>

@@ -7,25 +7,24 @@
   <title>글쓰기 · DevNote</title>
   <script>(()=>{try{const t=localStorage.getItem('devnote-theme')||'system';document.documentElement.dataset.theme=t}catch{document.documentElement.dataset.theme='system'}})()</script>
   <link rel="stylesheet" href="../assets/styles/colors.css">
+  <link rel="stylesheet" href="../assets/styles/katex.min.css">
   <link rel="stylesheet" href="../assets/styles/global.css">
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="../index.html">MonoBhvr DevLog</a>
-    <nav class="top-nav"><a href="../index.html#/projects">Projects</a><a href="index.html">글쓰기</a><label class="theme-select">Theme <select data-theme-select aria-label="색상 모드"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></nav>
+    <nav class="top-nav"><a href="../index.html#/projects">Projects</a><a href="../login/index.html" data-admin-login-nav>관리자 로그인</a><a href="index.html" data-write-nav hidden>글쓰기</a><label class="theme-select">Theme <select data-theme-select aria-label="색상 모드"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></nav>
   </header>
+  <script>(()=>{const k="devnote-authoring-token:MonoBhvr/DevNote";const l=document.querySelector('[data-admin-login-nav]');const w=document.querySelector('[data-write-nav]');let ok=false;try{ok=!!localStorage.getItem(k)}catch{}if(l)l.hidden=ok;if(w)w.hidden=!ok})()</script>
   <script>(()=>{const s=document.querySelector('[data-theme-select]');if(!s)return;const apply=t=>{document.documentElement.dataset.theme=t;s.value=t;try{localStorage.setItem('devnote-theme',t)}catch{}};s.value=document.documentElement.dataset.theme||'system';s.addEventListener('change',()=>apply(s.value))})()</script>
-  <main><section class="section page-title write-title"><p class="eyebrow">Authoring</p><h1>글쓰기</h1><p>로그인 후 왼쪽에서 작성하고 오른쪽에서 MarkNote 렌더링 결과를 바로 확인합니다.</p></section>
-    <section class="write-auth" data-authoring-root>
-      <section class="card write-card login-panel" data-login-panel>
-        <h2>GitHub 토큰 로그인</h2>
-        <p class="muted">fine-grained token은 런타임에만 입력합니다. 소스나 docs에는 저장하지 않습니다.</p>
-        <label>GitHub Token <input type="password" data-token autocomplete="off" placeholder="contents:write 권한 토큰"></label>
-        <button type="button" class="button login-button" data-login>GitHub 로그인</button>
-        <p class="status" data-auth-status>로그인이 필요합니다.</p>
+  <main><section class="section page-title write-title"><p class="eyebrow">Authoring</p><h1>글쓰기</h1></section>
+    <section class="write-auth" data-authoring-root data-authoring-mode="write">
+      <section class="card write-card write-guard" data-write-guard hidden>
+        <p class="status" data-auth-status></p>
       </section>
       <section class="write-workspace" data-writing-workspace hidden>
         <form class="write-editor" data-post-form data-editor-pane>
+          <div class="write-session"><p class="status" data-session-status>관리자 확인 중입니다.</p><button type="button" class="button secondary-button" data-logout>로그아웃</button></div>
           <div class="write-meta-grid">
             <label>프로젝트 <select data-project></select></label>
             <label>시리즈 <select data-series></select></label>
@@ -61,7 +60,7 @@
         </aside>
       </section>
     </section>
-    <script type="application/json" id="devnote-authoring-config">{&quot;repo&quot;:&quot;MonoBhvr/devnote-blog&quot;,&quot;branch&quot;:&quot;main&quot;,&quot;contentRoot&quot;:&quot;content&quot;,&quot;manifestPath&quot;:&quot;content/manifest.json&quot;,&quot;allowedAuthors&quot;:[&quot;MonoBhvr&quot;],&quot;projects&quot;:[{&quot;title&quot;:&quot;MarkNote 개발기&quot;,&quot;slug&quot;:&quot;marknote&quot;,&quot;series&quot;:[{&quot;title&quot;:&quot;문법 설계&quot;,&quot;slug&quot;:&quot;syntax&quot;}]}]}</script>
+    <script type="application/json" id="devnote-authoring-config">{"repo":"MonoBhvr/DevNote","branch":"main","contentRoot":"content","manifestPath":"content/manifest.json","allowedAuthors":["MonoBhvr"],"projects":[{"title":"MarkNote 개발기","slug":"marknote","series":[{"title":"문법 설계","slug":"syntax"}]}]}</script>
     <script src="../assets/scripts/authoring.js"></script></main>
 </body>
 </html>

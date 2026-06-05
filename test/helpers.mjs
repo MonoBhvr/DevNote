@@ -73,7 +73,17 @@ export async function createFixtureSite () {
   await writeFile(join(root, 'config/site.json'), JSON.stringify({
     title: 'DevNote',
     basePath: '/DevNote/',
-    defaultTheme: 'system'
+    defaultTheme: 'system',
+    repository: 'MonoBhvr/DevNote',
+    branch: 'main',
+    giscus: {
+      enabled: true,
+      repo: 'MonoBhvr/devnote-blog',
+      repoId: 'R_test',
+      category: 'General',
+      categoryId: 'DIC_test',
+      mapping: 'specific'
+    }
   }, null, 2))
   return {
     root,

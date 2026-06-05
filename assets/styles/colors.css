@@ -12,6 +12,18 @@
   --color-danger: #d94b42;
   --color-page-glow: rgba(16, 185, 129, 0.12);
   --color-editor-shadow: rgba(34, 43, 47, 0.08);
+  --color-prose-code-bg: #eef2f1;
+  --color-prose-code-border: #d5dedc;
+  --color-prose-quote-bg: #f0fdfa;
+  --color-prose-quote-border: #10b981;
+  --color-prose-mark-bg: #fff2b8;
+  --color-prose-mark-strong-bg: #ffd36a;
+  --color-marknote-block-bg: #f6fbfa;
+  --color-marknote-block-border: #d7e5e2;
+  --color-marknote-question-bg: #eff6ff;
+  --color-marknote-warning-bg: #fff7ed;
+  --color-marknote-info-bg: #f0fdfa;
+  --color-marknote-bold-bg: #f8fafc;
   --shadow-panel: 0 20px 80px rgba(32, 39, 43, 0.12);
 }
 
@@ -29,6 +41,18 @@
   --color-danger: #ff8075;
   --color-page-glow: rgba(98, 214, 196, 0.18);
   --color-editor-shadow: rgba(0, 0, 0, 0.35);
+  --color-prose-code-bg: #06161a;
+  --color-prose-code-border: #1f3c44;
+  --color-prose-quote-bg: rgba(98, 214, 196, 0.08);
+  --color-prose-quote-border: #62d6c4;
+  --color-prose-mark-bg: rgba(255, 210, 87, 0.24);
+  --color-prose-mark-strong-bg: rgba(255, 167, 38, 0.34);
+  --color-marknote-block-bg: rgba(13, 27, 32, 0.92);
+  --color-marknote-block-border: #2b535d;
+  --color-marknote-question-bg: rgba(59, 130, 246, 0.12);
+  --color-marknote-warning-bg: rgba(245, 158, 11, 0.12);
+  --color-marknote-info-bg: rgba(45, 212, 191, 0.1);
+  --color-marknote-bold-bg: rgba(231, 242, 240, 0.06);
   --shadow-panel: 0 20px 80px rgba(0, 0, 0, 0.35);
 }
 
@@ -47,6 +71,18 @@
     --color-danger: #ff8075;
     --color-page-glow: rgba(98, 214, 196, 0.18);
     --color-editor-shadow: rgba(0, 0, 0, 0.35);
+    --color-prose-code-bg: #06161a;
+    --color-prose-code-border: #1f3c44;
+    --color-prose-quote-bg: rgba(98, 214, 196, 0.08);
+    --color-prose-quote-border: #62d6c4;
+    --color-prose-mark-bg: rgba(255, 210, 87, 0.24);
+    --color-prose-mark-strong-bg: rgba(255, 167, 38, 0.34);
+    --color-marknote-block-bg: rgba(13, 27, 32, 0.92);
+    --color-marknote-block-border: #2b535d;
+    --color-marknote-question-bg: rgba(59, 130, 246, 0.12);
+    --color-marknote-warning-bg: rgba(245, 158, 11, 0.12);
+    --color-marknote-info-bg: rgba(45, 212, 191, 0.1);
+    --color-marknote-bold-bg: rgba(231, 242, 240, 0.06);
     --shadow-panel: 0 20px 80px rgba(0, 0, 0, 0.35);
   }
 }
