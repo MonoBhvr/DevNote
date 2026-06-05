@@ -388,44 +388,34 @@ time {
 }
 
 :where(.post-content.marknote-content, .preview-content) .marknote-block-marker {
-  display: inline-grid;
-  place-items: center;
-  min-width: 1.55rem;
-  height: 1.55rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
   margin-right: 0;
   border: 1px solid var(--color-marknote-block-border);
   border-radius: 999px;
-  color: var(--color-accent-strong);
-  background: color-mix(in srgb, var(--color-panel) 72%, transparent);
+  color: var(--color-accent);
+  background: rgba(255, 255, 255, 0.65);
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 900;
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1;
 }
 
 :where(.post-content.marknote-content, .preview-content) .marknote-fold summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   cursor: pointer;
-  color: var(--color-accent-strong);
-  font-weight: 800;
+  color: var(--color-accent);
+  font-weight: 700;
+  list-style: none;
 }
 
 :where(.post-content.marknote-content, .preview-content) .marknote-fold summary::-webkit-details-marker {
   display: none;
-}
-
-:where(.post-content.marknote-content, .preview-content) .marknote-fold summary::before {
-  content: "+";
-  display: inline-grid;
-  place-items: center;
-  width: 1.3rem;
-  height: 1.3rem;
-  margin-right: 0.45rem;
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  font-family: var(--font-mono);
-}
-
-:where(.post-content.marknote-content, .preview-content) .marknote-fold[open] summary::before {
-  content: "-";
 }
 
 :where(.post-content.marknote-content, .preview-content) .marknote-block-color-red { --marknote-block-color: #fff1f2; }
