@@ -1,11 +1,11 @@
 import { normalizeImageAlias } from './savePost.mjs'
 import { bytesToBase64 } from './encoding.mjs'
 
-export function updateAssetsMap ({ currentAssets = { images: {} }, alias, extension, alt = '', description = '', createdAt = '', overwrite = false }) {
+export function updateAssetsMap ({ currentAssets = { images: {} }, alias, extension, createdAt = '', overwrite = false }) {
   const normalizedAlias = normalizeImageAlias(alias)
-  if (!normalizedAlias) throw new Error('Image alias is required')
-  if (!/^[a-z0-9-]+$/.test(normalizedAlias)) throw new Error(`Invalid image alias: ${alias}`)
-  if (currentAssets.images?.[normalizedAlias] && !overwrite) throw new Error(`Image alias already exists: ${normalizedAlias}`)
+  if (!normalizedAlias) throw new Error('Image name is required')
+  if (!/^[a-z0-9-]+$/.test(normalizedAlias)) throw new Error(`Invalid image name: ${alias}`)
+  if (currentAssets.images?.[normalizedAlias] && !overwrite) throw new Error(`Image name already exists: ${normalizedAlias}`)
 
   return {
     ...currentAssets,
@@ -13,17 +13,15 @@ export function updateAssetsMap ({ currentAssets = { images: {} }, alias, extens
       ...(currentAssets.images || {}),
       [normalizedAlias]: {
         path: `./assets/images/${normalizedAlias}.${extension}`,
-        ...(alt ? { alt } : {}),
-        ...(description ? { description } : {}),
         ...(createdAt ? { createdAt } : {})
       }
     }
   }
 }
 
-export function createImageUploadFiles ({ projectSlug, alias, extension, bytes, alt = '', description = '', currentAssets = { images: {} }, createdAt = '', overwrite = false, contentRoot = 'content' }) {
+export function createImageUploadFiles ({ projectSlug, alias, extension, bytes, currentAssets = { images: {} }, createdAt = '', overwrite = false, contentRoot = 'content' }) {
   const normalizedAlias = normalizeImageAlias(alias)
-  const assets = updateAssetsMap({ currentAssets, alias: normalizedAlias, extension, alt, description, createdAt, overwrite })
+  const assets = updateAssetsMap({ currentAssets, alias: normalizedAlias, extension, createdAt, overwrite })
   return {
     alias: normalizedAlias,
     files: [

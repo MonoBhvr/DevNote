@@ -103,11 +103,9 @@ test('uploadImageThroughGitHub uploads base64 image once and then updates assets
     alias: 'Block Diagram',
     extension: 'png',
     bytes: new Uint8Array([105, 109, 103]),
-    alt: '블록 다이어그램',
-    description: '설명',
     createdAt: '2026-06-03'
   })
-  assert.equal(result.marknote, '[image[block-diagram | 블록 다이어그램]]')
+  assert.equal(result.marknote, '[image[block-diagram]]')
   assert.deepEqual(calls.map(call => call[0]), ['get', 'get', 'put', 'put'])
   assert.deepEqual(calls[2][2], { base64: 'aW1n' })
   assert.equal(calls[2][3], 'base64')
@@ -137,6 +135,10 @@ test('buildClientApp emits write page and browser assets without embedded secret
     assert.match(writePage, /data-session-status/)
     assert.match(writePage, /data-writing-workspace hidden/)
     assert.match(writePage, /data-preview/)
+    assert.match(writePage, /data-image-name/)
+    assert.doesNotMatch(writePage, /data-image-alias/)
+    assert.doesNotMatch(writePage, /data-image-alt/)
+    assert.doesNotMatch(writePage, /data-image-description/)
     assert.doesNotMatch(writePage, /data-login-panel/)
     assert.doesNotMatch(writePage, /data-token/)
     assert.doesNotMatch(loginPage + writePage, /type="module"/)
@@ -146,6 +148,8 @@ test('buildClientApp emits write page and browser assets without embedded secret
     assert.match(script, /localStorage\.setItem/)
     assert.match(script, /localStorage\.removeItem/)
     assert.match(script, /disabled/)
+    assert.doesNotMatch(script, /data-image-alt/)
+    assert.doesNotMatch(script, /data-image-description/)
     assert.doesNotMatch(loginPage + writePage + script, /client_secret|ghp_|github_pat_/i)
   } finally {
     await fixture.cleanup()

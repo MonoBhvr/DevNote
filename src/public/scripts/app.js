@@ -53,7 +53,7 @@ function renderMarkNote (source, assets, projectSlug) {
     const asset = assets.images?.[alias]
     if (!asset) return `<div class="marknote-image-broken">이미지 alias 없음: ${escapeHtml(alias)}</div>`
     const src = `content/projects/${projectSlug}/${asset.path.replace(/^\.\//, '')}`
-    const label = caption || asset.alt || alias
+    const label = caption || alias
     return `[image[${src} | ${label}]]`
   })
   return { html: renderMarkdownToHtml(resolvedSource), toc }

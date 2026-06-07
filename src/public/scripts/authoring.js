@@ -233,11 +233,9 @@ if (uploadButton) uploadButton.addEventListener('click', async () => {
     const result = await uploadImageThroughGitHub({
       client: client(),
       projectSlug: projectSelect.value,
-      alias: root.querySelector('[data-image-alias]').value || file.name.replace(/\.[^.]+$/, ''),
+      alias: root.querySelector('[data-image-name]').value || file.name.replace(/\.[^.]+$/, ''),
       extension,
       bytes: await file.arrayBuffer(),
-      alt: root.querySelector('[data-image-alt]').value,
-      description: root.querySelector('[data-image-description]').value,
       createdAt: new Date().toISOString().slice(0, 10),
       overwrite: root.querySelector('[data-image-overwrite]').checked,
       contentRoot: config.contentRoot

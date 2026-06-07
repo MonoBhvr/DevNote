@@ -49,8 +49,6 @@ test('createImageUploadFiles writes image bytes and updated assets map paths', (
     alias: 'Block Diagram',
     extension: 'png',
     bytes: Buffer.from('image-bytes'),
-    alt: '블록 다이어그램',
-    description: '파서 구조',
     currentAssets,
     createdAt: '2026-06-03'
   })
@@ -61,6 +59,7 @@ test('createImageUploadFiles writes image bytes and updated assets map paths', (
   ])
   assert.equal(image.files[0].content, Buffer.from('image-bytes').toString('base64'))
   assert.match(image.files[1].content, /\.\/assets\/images\/block-diagram\.png/)
+  assert.doesNotMatch(image.files[1].content, /alt|description/)
 })
 
 test('updateAssetsMap rejects duplicate image aliases unless overwrite is true', () => {

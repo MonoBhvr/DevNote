@@ -40,9 +40,11 @@ npm run preview
 작성 화면에서 가능한 작업:
 
 - 포스트 메타데이터와 `content.mnote` 저장
-- 이미지 업로드
-- `assets.json` 업데이트
-- 업로드한 이미지 문법을 본문에 삽입
+- 이름 기반 이미지 업로드
+- `assets.json`에 이미지 이름과 파일 경로 업데이트
+- `[image[이름]]` 문법을 본문에 삽입
+
+이미지 업로드에서 입력한 이름은 소문자 하이픈 형식으로 정규화되어 `content/projects/{project}/assets/images/{name}.{extension}`에 저장된다. alt나 설명은 업로드 UI에 따로 저장하지 않고, 본문에서 `[image[name | caption]]`처럼 MarkNote 문법으로 작성한다.
 
 `/write/`에서 저장하면 repository의 `content/...` 파일과 `content/manifest.json`이 갱신된다. GitHub Pages가 새 commit을 반영하면 앱이 갱신된 JSON과 `.mnote`를 fetch해서 바로 새 글을 보여준다.
 

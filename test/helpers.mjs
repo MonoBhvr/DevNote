@@ -28,16 +28,13 @@ export async function createFixtureSite () {
   await writeFile(join(root, 'content/projects/marknote/assets.json'), JSON.stringify({
     images: {
       'project-cover': {
-        path: './assets/images/project-cover.png',
-        alt: '프로젝트 대표 이미지'
+        path: './assets/images/project-cover.png'
       },
       'block-cover': {
-        path: './assets/images/block-cover.png',
-        alt: '블록 대표 이미지'
+        path: './assets/images/block-cover.png'
       },
       'block-diagram': {
-        path: './assets/images/block-diagram.png',
-        alt: '블록 다이어그램'
+        path: './assets/images/block-diagram.png'
       }
     }
   }, null, 2))

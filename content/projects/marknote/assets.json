@@ -2,20 +2,14 @@
   "images": {
     "project-cover": {
       "path": "./assets/images/project-cover.svg",
-      "alt": "MarkNote 프로젝트 대표 이미지",
-      "description": "MarkNote 개발기 프로젝트 대표 이미지",
       "createdAt": "2026-06-03"
     },
     "block-cover": {
       "path": "./assets/images/block-cover.svg",
-      "alt": "블록 문법 대표 이미지",
-      "description": "블록 문법 설계 포스트의 대표 이미지",
       "createdAt": "2026-06-03"
     },
     "block-diagram": {
       "path": "./assets/images/block-diagram.svg",
-      "alt": "MarkNote 블록 파싱 구조",
-      "description": "MarkNote 블록 파싱 구조를 설명하는 다이어그램",
       "createdAt": "2026-06-03"
     }
   }
