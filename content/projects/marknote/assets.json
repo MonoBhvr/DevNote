@@ -11,6 +11,10 @@
     "block-diagram": {
       "path": "./assets/images/block-diagram.svg",
       "createdAt": "2026-06-03"
+    },
+    "games": {
+      "path": "./assets/images/games.png",
+      "createdAt": "2026-06-07"
     }
   }
 }
